@@ -1,0 +1,1 @@
+LEARNER_HOME_MICROFRONTEND_URL = "http://{{ MFE_HOST }}:{{ learner_dashboard_port }}/learner-dashboard"

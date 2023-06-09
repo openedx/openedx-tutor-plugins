@@ -1,0 +1,2 @@
+LEARNER_HOME_MFE_REDIRECT_PERCENTAGE = 100
+LEARNER_HOME_MICROFRONTEND_URL = "{% if ENABLE_HTTPS %}https://{% else %}http://{% endif %}{{ MFE_HOST }}/learner-dashboard"
