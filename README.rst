@@ -44,7 +44,7 @@ Developing
 To create a new Tutor plugin in this repository, use the `Tutor plugin
 cookiecutter`_ in a directory under `plugins`, and commit results.
 
-.. _Tutor plugin cookiecutter: https://docs.tutor.overhang.io/install.html
+.. _Tutor plugin cookiecutter: https://github.com/overhangio/cookiecutter-tutor-plugin
 
 Getting Help
 ============
@@ -66,6 +66,7 @@ For more information about these options, see the `Getting Help`_ page.
 
 .. _Slack invitation: https://openedx.org/slack
 .. _community Slack workspace: https://openedx.slack.com/
+.. _#tutor channel: https://openedx.slack.com/archives/CGE253B7V
 .. _Getting Help: https://openedx.org/getting-help
 
 License
