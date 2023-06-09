@@ -1,0 +1,2 @@
+recursive-include tutor_learner_dashboard_mfe/patches *
+recursive-include tutor_learner_dashboard_mfe/templates *
