@@ -20,6 +20,8 @@ Plugin                               Status (*Experimental*, *Production*, or *D
 ===================================  ======================================================
 tutor-contrib-learner-dashboard-mfe  Experimental
 ===================================  ======================================================
+tutor-contrib-blockstore-filesystem  Experimental
+===================================  ======================================================
 
 Getting Started
 ===============

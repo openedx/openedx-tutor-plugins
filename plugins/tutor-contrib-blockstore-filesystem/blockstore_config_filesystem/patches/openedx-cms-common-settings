@@ -1,0 +1,1 @@
+BUNDLE_ASSET_STORAGE_SETTINGS = dict(STORAGE_CLASS="django.core.files.storage.FileSystemStorage", STORAGE_KWARGS=dict(location="/openedx/media/blockstore/", base_url="{{ "https" if ENABLE_HTTPS else "http" }}://{{ LMS_HOST }}/media/blockstore/"))

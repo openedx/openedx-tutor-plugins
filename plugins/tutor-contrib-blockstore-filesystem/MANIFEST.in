@@ -1,0 +1,2 @@
+recursive-include blockstore_config_filesystem/patches *
+recursive-include blockstore_config_filesystem/templates *
