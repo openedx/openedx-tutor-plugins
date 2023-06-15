@@ -19,6 +19,7 @@ community:
 Plugin                               Status (*Experimental*, *Production*, or *Deprecated*)
 ===================================  ======================================================
 tutor-contrib-learner-dashboard-mfe  Experimental
+tutor-contrib-library-authoring-mfe  Experimental
 tutor-contrib-blockstore-filesystem  Experimental
 tutor-contrib-blockstore-minio       Experimental
 ===================================  ======================================================
