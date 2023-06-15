@@ -1,0 +1,2 @@
+MFE_CONFIG_OVERRIDES.setdefault("library-authoring", {})["BLOCKSTORE_COLLECTION_UUID"] = "{{BLOCKSTORE_COLLECTION_UUID}}"
+MFE_CONFIG_OVERRIDES["library-authoring"]["SECURE_ORIGIN_XBLOCK_BOOTSTRAP_HTML_URL"] = "/library-authoring/xblock-bootstrap.html"
