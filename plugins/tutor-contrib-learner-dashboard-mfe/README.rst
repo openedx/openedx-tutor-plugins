@@ -14,7 +14,7 @@ Installation
 
 This will install the Learner Dashboard plugin directly from Github::
 
-    pip install git+https://github.com/openedx/openedx-tutor-plugins.git#egg=tutor-contrib-learner-dashboard-mfe&subdirectory=plugins/tutor-contrib-learner-dashboard-mfe
+    pip install git+https://github.com/openedx/openedx-tutor-plugins.git#subdirectory=plugins/tutor-contrib-learner-dashboard-mfe
 
 Alternatively, you can clone the parent repository locally and install it from
 the checkout::
