@@ -1,1 +1,1 @@
-LIBRARY_AUTHORING_MICROFRONTEND_URL = "http://{{ MFE_HOST }}:{{ LIBRARY_AUTHORING_MFE_APP["port"] }}/library-authoring"
+LIBRARY_AUTHORING_MICROFRONTEND_URL = "http://{{ MFE_HOST }}:{{ library_authoring_port }}/library-authoring"
