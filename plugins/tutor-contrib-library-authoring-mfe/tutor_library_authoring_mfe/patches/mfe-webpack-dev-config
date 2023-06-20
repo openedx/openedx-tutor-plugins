@@ -1,0 +1,16 @@
+const fs = require('fs');
+
+// If this is the Library Authoring MFE, serve xblock-bootstrap.html statically.
+if (fs.existsSync("src/library-authoring/edit-block/LibraryBlock/xblock-bootstrap.html")) {
+  const path = require('path');
+  const CopyPlugin = require('copy-webpack-plugin');
+
+  module.exports.plugins.push(
+    new CopyPlugin({
+      patterns: [{
+        context: path.resolve(__dirname, 'src/library-authoring/edit-block/LibraryBlock'),
+        from: 'xblock-bootstrap.html',
+      }],
+    }),
+  );
+}
