@@ -57,6 +57,20 @@ for service, template_path in MY_INIT_TASKS:
 
 
 ########################################
+# DOCKER IMAGE MANAGEMENT
+########################################
+
+# Add the -dev image.
+hooks.Filters.IMAGES_BUILD.add_item(
+    (
+        "learner-dashboard-dev",
+        ("plugins", "mfe", "build", "mfe"),
+        "{{ DOCKER_REGISTRY }}overhangio/openedx-learner-dashboard-dev:{{ MFE_VERSION }}",
+        (f"--target=learner-dashboard-dev",),
+    )
+)
+
+########################################
 # PATCH LOADING
 ########################################
 
