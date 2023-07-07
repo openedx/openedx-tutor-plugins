@@ -1,3 +1,4 @@
+from __future__ import annotations
 from glob import glob
 import os
 import pkg_resources
