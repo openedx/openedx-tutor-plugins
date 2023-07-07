@@ -54,6 +54,20 @@ for service, template_path in MY_INIT_TASKS:
     tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item((service, init_task))
 
 ########################################
+# DOCKER IMAGE MANAGEMENT
+########################################
+
+# Add the -dev image.
+tutor_hooks.Filters.IMAGES_BUILD.add_item(
+    (
+        "library-authoring-dev",
+        ("plugins", "mfe", "build", "mfe"),
+        "{{ DOCKER_REGISTRY }}overhangio/openedx-library-authoring-dev:{{ MFE_VERSION }}",
+        (f"--target=library-authoring-dev",),
+    )
+)
+
+########################################
 # TEMPLATE RENDERING
 ########################################
 
