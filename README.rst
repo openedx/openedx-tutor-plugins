@@ -18,7 +18,7 @@ community:
 ===================================  ======================================================
 Plugin                               Status (*Experimental*, *Production*, or *Deprecated*)
 ===================================  ======================================================
-tutor-contrib-learner-dashboard-mfe  Experimental
+tutor-contrib-learner-dashboard-mfe  Deprecated
 tutor-contrib-library-authoring-mfe  Experimental
 tutor-contrib-blockstore-filesystem  Experimental
 tutor-contrib-blockstore-minio       Experimental
@@ -36,7 +36,6 @@ to your deployment environment you would:
           cd openedx-tutor-plugins/plugins/<plugin-name>
           pip install -e .
           tutor plugins enable <plugin-name>
-          tutor config save
 
 Make sure to check each plugin's README file for more details.
 
