@@ -5,7 +5,7 @@ import pkg_resources
 import uuid
 
 from tutor import hooks as tutor_hooks
-from tutormfe.plugin import MFE_APPS
+from tutormfe.hooks import MFE_APPS, MFE_ATTRS_TYPE
 
 from .__about__ import __version__
 
@@ -13,19 +13,17 @@ from .__about__ import __version__
 # CONFIGURATION
 ########################################
 
-port = 3001
-
 @MFE_APPS.add()
-def _add_my_mfe(mfes):
-    mfes["library-authoring"] = {
-        "repository": "https://github.com/openedx/frontend-app-library-authoring",
-        "port": port,
-    }
-    return mfes
-
-tutor_hooks.Filters.ENV_TEMPLATE_VARIABLES.add_items(
-    [("library_authoring_port", port)]
-)
+def _add_library_authoring_mfe(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE_ATTRS_TYPE]:
+    apps.update(
+        {
+            "library-authoring": {
+                "repository": "https://github.com/openedx/frontend-app-library-authoring.git",
+                "port": 3001,
+            },
+        }
+    )
+    return apps
 
 tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
     [
@@ -53,19 +51,6 @@ for service, template_path in MY_INIT_TASKS:
         init_task: str = init_task_file.read()
     tutor_hooks.Filters.CLI_DO_INIT_TASKS.add_item((service, init_task))
 
-########################################
-# DOCKER IMAGE MANAGEMENT
-########################################
-
-# Add the -dev image.
-tutor_hooks.Filters.IMAGES_BUILD.add_item(
-    (
-        "library-authoring-dev",
-        ("plugins", "mfe", "build", "mfe"),
-        "{{ DOCKER_REGISTRY }}overhangio/openedx-library-authoring-dev:{{ MFE_VERSION }}",
-        (f"--target=library-authoring-dev",),
-    )
-)
 
 ########################################
 # TEMPLATE RENDERING
@@ -77,6 +62,7 @@ tutor_hooks.Filters.ENV_TEMPLATE_ROOTS.add_items(
         pkg_resources.resource_filename("tutor_library_authoring_mfe", "templates"),
     ]
 )
+
 
 ########################################
 # PATCH LOADING
