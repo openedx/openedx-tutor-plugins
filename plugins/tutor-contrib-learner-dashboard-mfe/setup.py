@@ -38,8 +38,9 @@ setup(
     long_description=load_readme(),
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
-    python_requires=">=3.7",
-    install_requires=["tutor"],
+    python_requires=">=3.8",
+    install_requires=["tutor>=16.0.0,<17.0.0", "tutor-mfe>=16.0.0,<17.0.0"],
+    extras_require={"dev": ["tutor[dev]>=16.0.0,<17.0.0"]},
     entry_points={
         "tutor.plugin.v1": [
             "learner-dashboard-mfe = tutor_learner_dashboard_mfe.plugin"
