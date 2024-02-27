@@ -1,3 +1,4 @@
 LIBRARY_AUTHORING_MICROFRONTEND_URL = "http://{{ MFE_HOST }}:{{ get_mfe('library-authoring')['port'] }}/library-authoring/"
 CORS_ORIGIN_WHITELIST.append("http://{{ MFE_HOST }}:{{ get_mfe('library-authoring')['port'] }}")
 LOGIN_REDIRECT_WHITELIST.append("{{ MFE_HOST }}:{{ get_mfe('library-authoring')['port'] }}")
+CSRF_TRUSTED_ORIGINS.append("http://{{ MFE_HOST }}:{{ get_mfe('library-authoring')['port'] }}")
