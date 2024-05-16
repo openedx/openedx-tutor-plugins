@@ -1,1 +1,2 @@
+MFE_CONFIG_OVERRIDES.setdefault("library-authoring", {})
 MFE_CONFIG_OVERRIDES["library-authoring"]["SECURE_ORIGIN_XBLOCK_BOOTSTRAP_HTML_URL"] = "/library-authoring/xblock-bootstrap.html"
