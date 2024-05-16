@@ -25,13 +25,6 @@ def _add_library_authoring_mfe(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE
     )
     return apps
 
-tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
-    [
-        ("BLOCKSTORE_COLLECTION_UUID", str(uuid.uuid4()))
-    ]
-)
-
-
 ########################################
 # INITIALIZATION TASKS
 ########################################
