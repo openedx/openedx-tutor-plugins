@@ -25,6 +25,18 @@ def _add_library_authoring_mfe(apps: dict[str, MFE_ATTRS_TYPE]) -> dict[str, MFE
     )
     return apps
 
+# This serves no backend purpose at the moment, and should be removed. But it's
+# currently echoed through to the backend and the v2 library creation endpoint
+# expects to receive some UUID, even if it doesn't do anything with it any
+# longer. We should delete this after modifying the view and MFE code to stop
+# using it.
+tutor_hooks.Filters.CONFIG_UNIQUE.add_items(
+    [
+        ("BLOCKSTORE_COLLECTION_UUID", str(uuid.uuid4()))
+    ]
+)
+
+
 ########################################
 # INITIALIZATION TASKS
 ########################################
