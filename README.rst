@@ -20,8 +20,6 @@ Plugin                               Status (*Experimental*, *Production*, or *D
 ===================================  ======================================================
 tutor-contrib-learner-dashboard-mfe  Deprecated
 tutor-contrib-library-authoring-mfe  Experimental
-tutor-contrib-blockstore-filesystem  Experimental
-tutor-contrib-blockstore-minio       Experimental
 ===================================  ======================================================
 
 Getting Started
@@ -31,7 +29,7 @@ Generally, assuming `Tutor is installed`_, to add a plugin in this repository
 to your deployment environment you would:
 
 .. code:: bash
-	  
+
 	  git clone git@github.com:openedx/openedx-tutor-plugins
           cd openedx-tutor-plugins/plugins/<plugin-name>
           pip install -e .
