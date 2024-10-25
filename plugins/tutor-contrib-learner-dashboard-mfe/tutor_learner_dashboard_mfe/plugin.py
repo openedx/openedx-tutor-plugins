@@ -4,7 +4,7 @@ import os
 import os.path
 from glob import glob
 
-import pkg_resources
+import importlib.resources
 
 from tutor import hooks
 from tutormfe.plugin import MFE_APPS
@@ -47,10 +47,9 @@ MY_INIT_TASKS: list[tuple[str, tuple[str, ...]]] = [
 # For each task added to MY_INIT_TASKS, we load the task template
 # and add it to the CLI_DO_INIT_TASKS filter, which tells Tutor to
 # run it as part of the `init` job.
+file_path = importlib.resources.files("tutor_learner_dashboard_mfe")
 for service, template_path in MY_INIT_TASKS:
-    full_path: str = pkg_resources.resource_filename(
-        "tutor_learner_dashboard_mfe", os.path.join("templates", *template_path)
-    )
+    full_path: str = file_path / os.path.join("templates", *template_path)
     with open(full_path, encoding="utf-8") as init_task_file:
         init_task: str = init_task_file.read()
     hooks.Filters.CLI_DO_INIT_TASKS.add_item((service, init_task))
@@ -78,7 +77,7 @@ hooks.Filters.IMAGES_BUILD.add_item(
 # apply a patch based on the file's name and contents.
 for path in glob(
     os.path.join(
-        pkg_resources.resource_filename("tutor_learner_dashboard_mfe", "patches"),
+        importlib.resources.files("tutor_learner_dashboard_mfe") / "patches",
         "*",
     )
 ):
