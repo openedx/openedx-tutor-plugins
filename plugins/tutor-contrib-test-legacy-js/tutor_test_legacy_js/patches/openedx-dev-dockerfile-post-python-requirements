@@ -1,0 +1,10 @@
+USER root
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt update && \
+    apt install -y libxmlsec1-dev ubuntu-restricted-extras xvfb libgtk-3-0
+RUN cd /opt && \
+    (curl -L "https://ftp.mozilla.org/pub/firefox/releases/123.0/linux-x86_64/en-US/firefox-123.0.tar.bz2" > ffox.tar.gz) && \
+    tar -xjf ffox.tar.gz && \
+    ln -s /opt/firefox/firefox /usr/bin/firefox
+USER app
