@@ -19,6 +19,7 @@ community:
 Plugin                               Status (*Experimental*, *Production*, or *Deprecated*)
 ===================================  ======================================================
 tutor-contrib-learner-dashboard-mfe  Deprecated
+tutor-contrib-test-legacy-js         "Production" (Supported For Developers)
 ===================================  ======================================================
 
 Getting Started
