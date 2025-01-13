@@ -1,0 +1,13 @@
+SCOUT_MONITOR = True
+SCOUT_KEY = "{{ SCOUT_KEY }}"
+SCOUT_NAME = "{{ SCOUT_NAME }} | LMS"
+
+# Prepend the Scout APM before everything else so that it can inject its
+# monitoring.
+INSTALLED_APPS.insert(0, "scout_apm.django")
+
+SCOUT_MIDDLEWARE = [
+    "scout_apm.django.middleware.MiddlewareTimingMiddleware",
+    "scout_apm.django.middleware.ViewTimingMiddleware",
+]
+MIDDLEWARE = SCOUT_MIDDLEWARE + MIDDLEWARE
