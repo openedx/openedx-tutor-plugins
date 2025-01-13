@@ -1,0 +1,2 @@
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared \
+    pip install "scout-apm>=3.2.1,<4.0"
