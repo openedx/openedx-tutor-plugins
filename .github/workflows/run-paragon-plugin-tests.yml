@@ -1,0 +1,33 @@
+# Workflow dedicated to testing the tutor-contrib-paragon plugin only
+name: Test - tutor-contrib-paragon
+
+on:
+  pull_request:
+    paths:
+      # Trigger this workflow only if files change inside this plugin folder
+      - 'plugins/tutor-contrib-paragon/**'
+
+jobs:
+  test-paragon:
+    name: Run tests for tutor-contrib-paragon
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # All steps will run from this directory
+        working-directory: plugins/tutor-contrib-paragon
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make dev-requirements
+
+      - name: Run tests
+        run: make run-tests

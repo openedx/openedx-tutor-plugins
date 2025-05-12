@@ -1,0 +1,62 @@
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/
+# https://hatch.pypa.io/latest/config/build/
+
+[project]
+name = "tutor-contrib-paragon"
+description = "Facilitates the generation and static hosting of Paragon-based theme CSS files for Open edX MFEs using Tutor."
+authors = [
+  { name = "Alejandro Cardenas"},
+  { email = "alejandro.cardenas@edunext.co" },
+]
+license = { text = "AGPL-3.0-only" }
+
+readme = {file = "README.rst", content-type = "text/x-rst"}
+requires-python = ">= 3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+
+]
+dependencies = [
+    "tutor>=19.0.0,<20.0.0",
+]
+
+optional-dependencies = { dev = ["tutor[dev]>=19.0.0,<20.0.0", "pytest>=8.3.4"] }
+
+# These fields will be set by hatch_build.py
+dynamic = ["version"]
+
+# https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels
+[project.urls]
+Documentation = "https://github.com/openedx/openedx-tutor-plugins.git#subdirectory=plugins/tutor-contrib-paragon#readme"
+Issues = "https://github.com/openedx/openedx-tutor-plugins.git#subdirectory=plugins/tutor-contrib-paragon/issues"
+Source = "https://github.com/openedx/openedx-tutor-plugins.git#subdirectory=plugins/tutor-contrib-paragon"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# hatch-specific configuration
+[tool.hatch.metadata.hooks.custom]
+path = ".hatch_build.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tutorparagon"]
+
+[tool.hatch.build.targets.sdist]
+# Disable strict naming, otherwise twine is not able to detect name/version
+strict-naming = false
+include = [ "/tutorparagon", ".hatch_build.py"]
+exclude = ["tests*"]
+
+[project.entry-points."tutor.plugin.v1"]
+paragon = "tutorparagon.plugin"
