@@ -3,7 +3,7 @@ Paragon plugin for `Tutor <https://docs.tutor.edly.io>`__
 
 Facilitates the generation and static hosting of Paragon-based CSS themes for Open edX Micro-Frontend (MFE) applications using `Paragon <https://openedx.github.io/paragon/>`__.
 
-This plugin provides a local folder structure to manage theme source files and compile them into CSS, enabling flexible customization of Open edX MFEs via Tutor.
+This plugin provides a local folder structure to manage **design token-based theme source files** (see `Paragon Design Tokens <https://github.com/openedx/paragon/?tab=readme-ov-file#design-tokens>`__) and compile them into CSS, enabling flexible customization of Open edX MFEs via Tutor.
 
 Installation
 ************
@@ -33,13 +33,14 @@ The plugin will create the following structure inside your Tutor environment:
 .. code-block::
 
     tutor/env/plugins/paragon/
-    ├── theme-sources/           # Place your style dictionary folders here (e.g. theme-xyz/)
-    └── compiled-themes/         # Compiled CSS files go here, ready for static hosting
+    ├── theme-sources/           # Place your Paragon-based theme folders here (e.g., theme-xyz/)
+    └── compiled-themes/         # Output CSS files are generated here and ready for static hosting
 
-Each theme inside `theme-sources/` should follow the Style Dictionary folder structure.
 Only themes listed in `PARAGON_ENABLED_THEMES` will be compiled.
 
-The `compiled-themes/` folder is designed to be exposed via static web servers such as **nginx** or **Caddy**, or can be uploaded to cloud hosting providers like **Amazon S3** or **Cloudflare Pages**.
+Themes placed in `theme-sources/` are compiled into CSS using `Paragon's theme build process <https://github.com/openedx/paragon/?tab=readme-ov-file#paragon-cli>`_. The resulting CSS files in `compiled-themes/` are intended to be served statically and can be linked using the `PARAGON_THEME_URLS` setting.
+
+This structure is optimized for design token–based themes (see `Paragon Design Tokens <https://github.com/openedx/paragon/?tab=readme-ov-file#design-tokens>`__), but it is also flexible. If site operators need to include small amounts of additional CSS (not handled via tokens), we recommend doing so via extensions in the theme source directory, so they are included during the Paragon build—rather than manually editing the compiled output.
 
 Configuration
 *************

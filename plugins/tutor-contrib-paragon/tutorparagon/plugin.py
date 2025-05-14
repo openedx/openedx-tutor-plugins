@@ -45,7 +45,7 @@ def create_paragon_folders(project_root: str) -> None:
     )
 
     for path, label in [
-        (theme_sources_path, "Theme Shources"),
+        (theme_sources_path, "Theme Sources"),
         (compiled_themes_path, "Compiled Themes"),
     ]:
         if os.path.exists(path):
