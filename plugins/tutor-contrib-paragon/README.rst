@@ -42,6 +42,11 @@ Themes placed in `theme-sources/` are compiled into CSS using `Paragon's theme b
 
 This structure is optimized for design token–based themes (see `Paragon Design Tokens <https://github.com/openedx/paragon/?tab=readme-ov-file#design-tokens>`__), but it is also flexible. If site operators need to include small amounts of additional CSS (not handled via tokens), we recommend doing so via extensions in the theme source directory, so they are included during the Paragon build—rather than manually editing the compiled output.
 
+.. note::
+
+   Documentation for how to use extensions is not yet available.
+   A link to the official Open edX or Paragon documentation will be added here once it is published.
+
 Configuration
 *************
 
