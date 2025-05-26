@@ -1,0 +1,8 @@
+# Paragon Builder
+paragon-builder-job:
+    image: {{ PARAGON_BUILDER_IMAGE }}
+    environment:
+      - PARAGON_ENABLED_THEMES={{ PARAGON_ENABLED_THEMES | join(',') }}
+    volumes:
+      - "./../../{{ PARAGON_THEME_SOURCES_PATH }}:/theme-sources"
+      - "./../../{{ PARAGON_COMPILED_THEMES_PATH }}:/compiled-themes"
