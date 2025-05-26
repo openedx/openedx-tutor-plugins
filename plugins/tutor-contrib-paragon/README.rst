@@ -44,7 +44,6 @@ This structure is optimized for design token–based themes (see `Paragon Design
 
 .. note::
 
-   Documentation for how to use extensions is not yet available.
    A link to the official Open edX or Paragon documentation will be added here once it is published.
 
 Configuration
@@ -60,8 +59,106 @@ All configuration variables can be overridden via `tutor config save`:
       - theme-1
       - theme-2
     PARAGON_SERVE_COMPILED_THEMES: true
+    PARAGON_BUILDER_IMAGE: "paragon-builder:latest"
 
 You may customize paths or theme names to suit your deployment.
+
+Usage
+*****
+
+Prerequisites
+-------------
+
+- A built Paragon CLI image:
+
+  .. code-block:: bash
+
+      tutor images build paragon-builder
+
+- A theme source directory structured as follows:
+
+  .. code-block:: text
+
+      theme-sources/
+      ├── core/
+      │   └── ... (token files)
+      └── themes/
+          ├── light/     # example theme variant
+          │   └── ... (light theme token files)
+          └── dark/      # example theme variant
+          └── ... (dark theme token files)
+
+  In this structure:
+
+  - The ``core/`` directory contains base design tokens common across all themes.
+  - The ``themes/`` directory contains subdirectories for each theme variant (e.g., ``light``, ``dark``), each with tokens specific to that theme.
+
+Building Themes
+---------------
+
+Invoke the build process via Tutor:
+
+.. code-block:: bash
+
+    tutor local do build-tokens [OPTIONS]
+
+Available options:
+
+- ``--source-tokens-only``  
+  Include only source design tokens in the build.
+
+- ``--output-token-references``  
+  Include references for tokens with aliases to other tokens in the build output.
+
+- ``--themes <theme1,theme2>``  
+  Comma-separated list of theme names to compile. Defaults to the list defined in ``PARAGON_ENABLED_THEMES`` if not provided.
+
+- ``-v, --verbose``  
+  Enable verbose logging.
+
+Examples
+--------
+
+.. code-block:: bash
+
+    # Compile all themes listed in PARAGON_ENABLED_THEMES
+    tutor local do build-tokens
+
+    # Compile only specific themes
+    tutor local do build-tokens --themes theme-1,theme-2
+
+    # Compile with full debug logs
+    tutor local do build-tokens --verbose
+
+    # Compile only source tokens for a single theme
+    tutor local do build-tokens --themes theme-1 --source-tokens-only
+
+Output
+------
+
+Artifacts will be written to the directory specified by ``PARAGON_COMPILED_THEMES_PATH`` (default: ``env/plugins/paragon/compiled-themes``).
+
+Troubleshooting
+***************
+
+- **No custom themes built or only default tokens generated**  
+  Ensure that your custom theme directories exist under ``PARAGON_THEME_SOURCES_PATH`` and that their names exactly match those in ``PARAGON_ENABLED_THEMES`` or passed via ``--themes``. If no custom tokens are found, Paragon will fall back to its built-in defaults.
+
+- **Themes are not picked up when using --themes:**  
+  The value for ``--themes`` must be a comma-separated list (no spaces), e.g. ``--themes theme-1,theme-2``.
+
+- **Write permission denied**  
+  Verify that Docker and the Tutor process have write access to the path defined by ``PARAGON_COMPILED_THEMES_PATH``. Adjust filesystem permissions if necessary.
+
+- **Error: "Expected at least 4 args"**  
+  This occurs when the build job is invoked directly inside the container. Always run via Tutor:
+
+  .. code-block:: bash
+
+      tutor local do build-tokens [OPTIONS]
+
+- **Other issues**  
+  Re-run the build with ``--verbose`` to obtain detailed logs and identify misconfigurations or missing files.
 
 License
 *******
