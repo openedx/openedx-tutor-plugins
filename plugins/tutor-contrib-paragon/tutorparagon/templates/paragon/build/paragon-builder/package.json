@@ -1,0 +1,9 @@
+{
+  "name": "paragon-builder",
+  "version": "1.0.0",
+  "description": "Paragon Builder for Tutor",
+  "private": true,
+  "dependencies": {
+    "@openedx/paragon": "^23.10.0"
+  }
+}
