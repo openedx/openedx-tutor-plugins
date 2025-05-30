@@ -75,11 +75,11 @@ Prerequisites
 
       tutor images build paragon-builder
 
-- A theme source directory structured as follows:
+- The ``PARAGON_THEME_SOURCES_PATH`` directory structured as follows:
 
   .. code-block:: text
 
-      theme-sources/
+      <PARAGON_THEME_SOURCES_PATH>/
       ├── core/
       │   └── ... (token files)
       └── themes/
@@ -100,7 +100,7 @@ Invoke the build process via Tutor:
 
 .. code-block:: bash
 
-    tutor local do build-tokens [OPTIONS]
+    tutor local do paragon-build-tokens [OPTIONS]
 
 Available options:
 
@@ -122,16 +122,16 @@ Examples
 .. code-block:: bash
 
     # Compile all themes listed in PARAGON_ENABLED_THEMES
-    tutor local do build-tokens
+    tutor local do paragon-build-tokens
 
     # Compile only specific themes
-    tutor local do build-tokens --themes theme-1,theme-2
+    tutor local do paragon-build-tokens --themes theme-1,theme-2
 
     # Compile with full debug logs
-    tutor local do build-tokens --verbose
+    tutor local do paragon-build-tokens --verbose
 
     # Compile only source tokens for a single theme
-    tutor local do build-tokens --themes theme-1 --source-tokens-only
+    tutor local do paragon-build-tokens --themes theme-1 --source-tokens-only
 
 Output
 ------
@@ -155,7 +155,7 @@ Troubleshooting
 
   .. code-block:: bash
 
-      tutor local do build-tokens [OPTIONS]
+      tutor local do paragon-build-tokens [OPTIONS]
 
 - **Other issues**  
   Re-run the build with ``--verbose`` to obtain detailed logs and identify misconfigurations or missing files.
