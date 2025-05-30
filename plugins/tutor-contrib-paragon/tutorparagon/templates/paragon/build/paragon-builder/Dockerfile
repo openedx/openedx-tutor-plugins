@@ -1,6 +1,8 @@
-FROM node:18-alpine
+FROM node:22-alpine
 
 COPY entrypoint.sh /entrypoint.sh
+
+WORKDIR /paragon-builder
 
 RUN npm install --save @openedx/paragon && \
     chmod +x /entrypoint.sh
