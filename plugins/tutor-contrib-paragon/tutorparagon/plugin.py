@@ -5,9 +5,12 @@ import click
 import importlib_resources
 from tutor import hooks
 from tutor import config as tutor_config
+import logging
 
 from .__about__ import __version__
 from .commands import paragon_build_tokens
+
+logger = logging.getLogger(__name__)
 
 ########################################
 # CONFIGURATION
@@ -53,10 +56,10 @@ def create_paragon_folders(project_root: str) -> None:
         (compiled_themes_path, "Compiled Themes"),
     ]:
         if os.path.exists(path):
-            print(f"[paragon] {label} folder already exists at: {path}")
+            logger.info(f"[paragon] {label} folder already exists at: {path}")
         else:
             os.makedirs(path, exist_ok=True)
-            print(f"[paragon] Created {label} folder at: {path}")
+            logger.info(f"[paragon] Created {label} folder at: {path}")
 
 
 ########################################
