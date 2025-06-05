@@ -7,6 +7,7 @@ from tutor import hooks
 from tutor import config as tutor_config
 
 from .__about__ import __version__
+from .commands import paragon_build_tokens
 
 ########################################
 # CONFIGURATION
@@ -27,6 +28,9 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         ("PARAGON_ENABLED_THEMES", []),
         # Whether Tutor should expose the compiled themes to be served (e.g. via nginx, cady or static server)
         ("PARAGON_SERVE_COMPILED_THEMES", True),
+        # Paragon Builder Docker image
+        # This image is used to compile themes and should be built with `tutor images build paragon-builder`
+        ("PARAGON_BUILDER_IMAGE", "paragon-builder:latest"),
     ]
 )
 
@@ -53,6 +57,22 @@ def create_paragon_folders(project_root: str) -> None:
         else:
             os.makedirs(path, exist_ok=True)
             print(f"[paragon] Created {label} folder at: {path}")
+
+
+########################################
+# DOCKER IMAGE MANAGEMENT
+########################################
+
+hooks.Filters.IMAGES_BUILD.add_items(
+    [
+        (
+            "paragon-builder",  # Image name used with 'tutor images build myservice'
+            ("plugins", "paragon", "build", "paragon-builder"),  # Path to Dockerfile
+            "{{ PARAGON_BUILDER_IMAGE }}",  # Docker image tag
+            (),  # Build arguments
+        ),
+    ]
+)
 
 
 ########################################
@@ -92,3 +112,10 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
 for path in glob(str(importlib_resources.files("tutorparagon") / "patches" / "*")):
     with open(path, encoding="utf-8") as patch_file:
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
+
+
+########################################
+# CUSTOM JOBS (a.k.a. "do-commands")
+########################################
+
+hooks.Filters.CLI_DO_COMMANDS.add_item(paragon_build_tokens)
