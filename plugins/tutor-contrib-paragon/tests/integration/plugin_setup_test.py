@@ -15,12 +15,14 @@ from .helpers import (
     PARAGON_THEME_SOURCES_FOLDER,
 )
 
+import pytest
 import logging
 import os
 
 logger = logging.getLogger(__name__)
 
 
+@pytest.mark.order(1)
 def test_paragon_plugin_installed():
     """Verify that the 'paragon' plugin is installed and enabled."""
 
@@ -34,6 +36,7 @@ def test_paragon_plugin_installed():
     assert "enabled" in result.stdout, f"The '{PARAGON_NAME}' plugin is not enabled"
 
 
+@pytest.mark.order(2)
 def test_paragon_plugin_folders_created():
     """Verify that the 'paragon' plugin's folders exist in the filesystem."""
 
@@ -51,6 +54,7 @@ def test_paragon_plugin_folders_created():
         assert os.path.isdir(folder_path), f"{folder_path} is not a directory."
 
 
+@pytest.mark.order(3)
 def test_paragon_plugin_build_tokens_job_exists():
     """Verify that the 'paragon-build-tokens' job exists in Tutor's configuration."""
 

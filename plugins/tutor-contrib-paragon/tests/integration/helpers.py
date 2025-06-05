@@ -21,13 +21,18 @@ def execute_tutor_command(command: list[str]):
     Returns:
         subprocess.CompletedProcess: Contains stdout, stderr, returncode.
     """
+    full_command = ["tutor"] + command
     result = subprocess.run(
-        ["tutor"] + command,
+        full_command,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
         check=False,
     )
+
+    if result.returncode != 0:
+        logger.error("Command failed: %s", " ".join(full_command))
+        logger.error("stderr: %s", result.stderr.strip())
 
     return result
 
