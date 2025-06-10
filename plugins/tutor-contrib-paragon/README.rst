@@ -107,8 +107,11 @@ Available options:
 - ``--source-tokens-only``  
   Include only source design tokens in the build.
 
-- ``--output-token-references``  
-  Include references for tokens with aliases to other tokens in the build output.
+- ``--output-token-references/--no-output-token-references``  
+  Include references for tokens with aliases to other tokens in the build (default: enabled).
+
+- ``--exclude-core``  
+  Exclude core from the token build.
 
 - ``--themes <theme1,theme2>``  
   Comma-separated list of theme names to compile. Defaults to the list defined in ``PARAGON_ENABLED_THEMES`` if not provided.
@@ -132,6 +135,12 @@ Examples
 
     # Compile only source tokens for a single theme
     tutor local do paragon-build-tokens --themes theme-1 --source-tokens-only
+
+    # Compile without outputting token references
+    tutor local do paragon-build-tokens --no-output-token-references
+
+    # Compile excluding core tokens
+    tutor local do paragon-build-tokens --exclude-core
 
 Output
 ------

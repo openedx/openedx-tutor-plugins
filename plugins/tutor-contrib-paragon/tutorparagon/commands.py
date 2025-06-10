@@ -17,10 +17,15 @@ import click
     help="Include only source design tokens in the build.",
 )
 @click.option(
-    "--output-token-references",
+    "--output-token-references/--no-output-token-references",
+    default=True,
+    help="Include references for tokens with aliases to other tokens in the build.",
+)
+@click.option(
+    "--exclude-core",
     is_flag=True,
     default=False,
-    help="Include references for tokens with aliases to other tokens in the build output.",
+    help="Exclude core from the token build.",
 )
 @click.option("--themes", help="Comma-separated list of themes to build.")
 @click.option(
@@ -29,6 +34,7 @@ import click
 def paragon_build_tokens(
     source_tokens_only: bool,
     output_token_references: bool,
+    exclude_core: bool,
     themes: str,
     verbose: bool,
 ) -> list[tuple[str, str]]:
@@ -38,6 +44,7 @@ def paragon_build_tokens(
     Args:
         source_tokens_only (bool): Only source design tokens.
         output_token_references (bool): Output token references.
+        exclude_core (bool): Exclude core from the token build.
         themes (str): Comma-separated list of themes.
         verbose (bool): Verbose logging.
 
@@ -47,8 +54,10 @@ def paragon_build_tokens(
     args = []
     if source_tokens_only:
         args.append("--source-tokens-only")
-    if output_token_references:
-        args.append("--output-token-references")
+    if not output_token_references:
+        args.append("--output-references=false")
+    if exclude_core:
+        args.append("--exclude-core")
     if themes:
         args.append("--themes")
         args.append(themes)
