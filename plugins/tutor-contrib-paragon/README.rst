@@ -102,45 +102,21 @@ Invoke the build process via Tutor:
 
     tutor local do paragon-build-tokens [OPTIONS]
 
-Available options:
-
-- ``--source-tokens-only``  
-  Include only source design tokens in the build.
-
-- ``--output-token-references/--no-output-token-references``  
-  Include references for tokens with aliases to other tokens in the build (default: enabled).
-
-- ``--exclude-core``  
-  Exclude core from the token build.
-
-- ``--themes <theme1,theme2>``  
-  Comma-separated list of theme names to compile. Defaults to the list defined in ``PARAGON_ENABLED_THEMES`` if not provided.
-
-- ``-v, --verbose``  
-  Enable verbose logging.
+For more information about available options, refer to the `Paragon CLI documentation <https://github.com/openedx/paragon/?tab=readme-ov-file#paragon-cli>`__.
 
 Examples
 --------
 
 .. code-block:: bash
 
-    # Compile all themes listed in PARAGON_ENABLED_THEMES
-    tutor local do paragon-build-tokens
+  # Compile all themes listed in PARAGON_ENABLED_THEMES
+  tutor local do paragon-build-tokens
 
-    # Compile only specific themes
-    tutor local do paragon-build-tokens --themes theme-1,theme-2
+  # Compile only specific themes
+  tutor local do paragon-build-tokens --themes theme-1,theme-2
 
-    # Compile with full debug logs
-    tutor local do paragon-build-tokens --verbose
-
-    # Compile only source tokens for a single theme
-    tutor local do paragon-build-tokens --themes theme-1 --source-tokens-only
-
-    # Compile without outputting token references
-    tutor local do paragon-build-tokens --no-output-token-references
-
-    # Compile excluding core tokens
-    tutor local do paragon-build-tokens --exclude-core
+  # Pass any other Paragon CLI options as needed
+  tutor local do paragon-build-tokens --paragon-option value
 
 Output
 ------
