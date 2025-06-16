@@ -9,50 +9,13 @@ as Tutor "do commands", this specialized jobs can be executed using
 import click
 
 
-@click.command()
-@click.option(
-    "--source-tokens-only",
-    is_flag=True,
-    default=False,
-    help="Include only source design tokens in the build.",
+@click.command(
+    context_settings=dict(ignore_unknown_options=True, allow_extra_args=True)
 )
-@click.option(
-    "--output-token-references",
-    is_flag=True,
-    default=False,
-    help="Include references for tokens with aliases to other tokens in the build output.",
-)
-@click.option("--themes", help="Comma-separated list of themes to build.")
-@click.option(
-    "-v", "--verbose", is_flag=True, default=False, help="Enable verbose logging."
-)
-def paragon_build_tokens(
-    source_tokens_only: bool,
-    output_token_references: bool,
-    themes: str,
-    verbose: bool,
-) -> list[tuple[str, str]]:
+@click.pass_context
+def paragon_build_tokens(ctx: click.Context) -> list[tuple[str, str]]:
     """
     Build theme token files using Paragon.
-
-    Args:
-        source_tokens_only (bool): Only source design tokens.
-        output_token_references (bool): Output token references.
-        themes (str): Comma-separated list of themes.
-        verbose (bool): Verbose logging.
-
-    Returns:
-        list[tuple[str, str]]: List of commands to run.
+    Accepts and forwards all options/arguments to paragon-builder.
     """
-    args = []
-    if source_tokens_only:
-        args.append("--source-tokens-only")
-    if output_token_references:
-        args.append("--output-token-references")
-    if themes:
-        args.append("--themes")
-        args.append(themes)
-    if verbose:
-        args.append("--verbose")
-
-    return [("paragon-builder", " ".join(args))]
+    return [("paragon-builder", " ".join(ctx.args))]
