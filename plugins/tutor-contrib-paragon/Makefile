@@ -22,12 +22,15 @@ isort: ##  Sort imports. This target is not mandatory because the output may be 
 	isort --skip=templates ${SRC_DIRS}
 
 unittest: ## Run code tests cases
-	pytest tests
+	pytest tests --ignore=tests/integration
+
+integration-test: ## Run integration tests cases
+	pytest tests/integration --order-scope=module
 
 dev-requirements: ## Install dev requirements
 	pip install -e .[dev]
 
-run-tests: test unittest  # Run static analysis and unit tests
+run-tests: test unittest integration-test  # Run all tests: static analysis, unit tests, and integration tests
 
 ESCAPE = 
 help: ## Print this help
