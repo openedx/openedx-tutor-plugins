@@ -53,6 +53,7 @@ npx paragon build-tokens \
 # Moves the built themes to the final volume directory.
 mkdir -p "$FINAL_BUILD_DIR"
 cp -a "$TMP_BUILD_DIR/." "$FINAL_BUILD_DIR/"
+chmod -R a+rw "$FINAL_BUILD_DIR"
 
 # Clean up
 rm -rf "$TMP_BUILD_DIR"

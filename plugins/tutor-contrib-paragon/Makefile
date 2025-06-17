@@ -25,7 +25,7 @@ unittest: ## Run code tests cases
 	pytest tests --ignore=tests/integration
 
 integration-test: ## Run integration tests cases
-	pytest tests/integration
+	pytest tests/integration --order-scope=module
 
 dev-requirements: ## Install dev requirements
 	pip install -e .[dev]
