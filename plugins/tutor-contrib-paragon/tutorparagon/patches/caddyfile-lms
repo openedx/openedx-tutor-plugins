@@ -1,0 +1,12 @@
+
+# Tutor Paragon Caddyfile configuration for serving Paragon static files
+handle_path /{{ PARAGON_STATIC_URL_PREFIX }}* {
+    @mincss {
+        # Match only minified CSS files
+        path_regexp mincss \.min\.css$ 
+    }
+    handle @mincss {
+        # Proxy to the Paragon static files container
+        reverse_proxy paragon-statics:80
+    }
+}

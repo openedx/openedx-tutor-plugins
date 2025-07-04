@@ -34,6 +34,11 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         # Paragon Builder Docker image
         # This image is used to compile themes and should be built with `tutor images build paragon-builder`
         ("PARAGON_BUILDER_IMAGE", "paragon-builder:latest"),
+        # Paragon static server configuration
+        # This server serves the compiled themes
+        ("PARAGON_STATIC_SERVER_IMAGE", "nginx:stable-alpine"),
+        ("PARAGON_STATIC_SERVER_PORT", 18000),
+        ("PARAGON_STATIC_URL_PREFIX", "static/paragon/"),
     ]
 )
 
