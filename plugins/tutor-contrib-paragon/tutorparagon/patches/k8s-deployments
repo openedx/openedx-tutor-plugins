@@ -1,0 +1,39 @@
+{% if PARAGON_SERVE_COMPILED_THEMES %}
+{% if not PARAGON_ENABLED_THEMES %} {% set PARAGON_ENABLED_THEMES = ['light'] %} {% endif %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paragon-statics
+  namespace: openedx
+  labels:
+    app.kubernetes.io/name: paragon-statics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paragon-statics
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paragon-statics
+    spec:
+      containers:
+      - name: nginx
+        image: {{ PARAGON_STATIC_SERVER_IMAGE }}
+        volumeMounts:
+        - name: static-files
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+      volumes:
+      - name: static-files
+        configMap:
+          name: paragon-static-files
+          items:
+          - key: core.min.css
+            path: core/core.min.css
+          {% for theme in PARAGON_ENABLED_THEMES %}
+          - key: {{ theme }}.min.css
+            path: themes/{{ theme }}/{{ theme }}.min.css
+          {% endfor %}
+{% endif %}

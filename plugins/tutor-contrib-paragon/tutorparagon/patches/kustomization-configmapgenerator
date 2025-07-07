@@ -1,0 +1,10 @@
+{% if PARAGON_SERVE_COMPILED_THEMES %}
+{% if not PARAGON_ENABLED_THEMES %} {% set PARAGON_ENABLED_THEMES = ['light'] %} {% endif %}
+- name: paragon-static-files
+  files:
+  - core.min.css=../{{ PARAGON_COMPILED_THEMES_PATH }}/core/core.min.css {% for theme in PARAGON_ENABLED_THEMES %}
+  - {{ theme }}.min.css=../{{ PARAGON_COMPILED_THEMES_PATH }}/themes/{{ theme }}/{{ theme }}.min.css{% endfor %}
+  options:
+    labels:
+      app.kubernetes.io/name: paragon-static-files
+{% endif %}

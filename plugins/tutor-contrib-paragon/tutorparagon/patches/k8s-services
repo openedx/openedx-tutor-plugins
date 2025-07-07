@@ -1,0 +1,14 @@
+{% if PARAGON_SERVE_COMPILED_THEMES %}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paragon-statics
+  namespace: openedx
+spec:
+  selector:
+    app.kubernetes.io/name: paragon-statics
+  ports:
+    - port: 80
+      targetPort: 80
+{% endif %}
