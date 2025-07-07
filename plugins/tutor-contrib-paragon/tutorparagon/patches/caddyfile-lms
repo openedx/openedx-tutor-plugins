@@ -1,4 +1,4 @@
-
+{% if PARAGON_SERVE_COMPILED_THEMES %}
 # Tutor Paragon Caddyfile configuration for serving Paragon static files
 handle_path /{{ PARAGON_STATIC_URL_PREFIX }}* {
     @mincss {
@@ -10,3 +10,4 @@ handle_path /{{ PARAGON_STATIC_URL_PREFIX }}* {
         reverse_proxy paragon-statics:80
     }
 }
+{% endif %}

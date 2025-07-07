@@ -1,7 +1,4 @@
-{% if not PARAGON_ENABLED_THEMES %}
-{% set PARAGON_ENABLED_THEMES = ['light'] %}
-{% endif %}
-
+{% if not PARAGON_ENABLED_THEMES %}{% set PARAGON_ENABLED_THEMES = ['light'] %}{% endif %}
 {% set PROTOCOL = 'https' if ENABLE_HTTPS else 'http' %}
 {% set BASE_URL = PROTOCOL ~ "://" ~ LMS_HOST ~ "/" ~ PARAGON_STATIC_URL_PREFIX %}
 

@@ -1,3 +1,4 @@
+{% if PARAGON_SERVE_COMPILED_THEMES %}
 # Paragon Builder
 paragon-statics:
     image: {{ PARAGON_STATIC_SERVER_IMAGE }}
@@ -7,3 +8,4 @@ paragon-statics:
     {% endif %}
     volumes:
       - "./../../{{ PARAGON_COMPILED_THEMES_PATH }}:/usr/share/nginx/html:ro"
+{% endif %}
