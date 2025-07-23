@@ -7,5 +7,5 @@ paragon-statics:
       - "{{ PARAGON_STATIC_SERVER_PORT }}:80"
     {% endif %}
     volumes:
-      - "./../../{{ PARAGON_COMPILED_THEMES_PATH }}:/usr/share/nginx/html:ro"
+      - "./../../{{ PARAGON_COMPILED_THEMES_PATH }}:/usr/share/caddy:ro"
 {% endif %}
