@@ -37,7 +37,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         # Paragon static server configuration
         # This server serves the compiled themes
         ("PARAGON_STATIC_SERVER_IMAGE", "caddy:alpine"),
-        ("PARAGON_STATIC_SERVER_PORT", 18000),
+        ("PARAGON_STATIC_SERVER_PORT", 12400),
         ("PARAGON_STATIC_URL_PREFIX", "static/paragon/"),
     ]
 )
