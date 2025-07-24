@@ -1,0 +1,3 @@
+{% set PROTOCOL = 'https' if ENABLE_HTTPS else 'http' %}
+{% set PARAGON_BASE_URL = PROTOCOL ~ "://" ~ "localhost" ~ ":" ~ PARAGON_STATIC_SERVER_PORT ~ "/" %}
+{% include "paragon/settings/mfe-config-lms-common-setting" %}
