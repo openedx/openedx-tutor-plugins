@@ -26,6 +26,12 @@ def setup_tutor_paragon_plugin():
         capture_output=True,
     )
 
+    subprocess.run(
+        ["tutor", "config", "save", "--set", "LMS_HOST=local.openedx.io"],
+        check=True,
+        capture_output=True,
+    )
+
     yield
 
     subprocess.run(

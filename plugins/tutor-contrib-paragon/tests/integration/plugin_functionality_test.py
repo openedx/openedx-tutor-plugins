@@ -187,12 +187,12 @@ def test_build_tokens_hosted_files():
     assert result.returncode == 0, f"Error running build-tokens job: {result.stderr}"
 
     static_url_prefix = get_config_value("PARAGON_STATIC_URL_PREFIX").lstrip("/")
-    mfe_host = "apps.local.openedx.io"
+    mfe_host = get_config_value("MFE_HOST")
 
     services_result = execute_tutor_command(["local", "start", "-d", "caddy", "mfe"])
     assert services_result.returncode == 0, "Error starting hosting services"
 
-    time.sleep(1)
+    time.sleep(5)
 
     try:
         base_url = f"http://{mfe_host}/{static_url_prefix}"
