@@ -5,6 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+MFE_SERVICE = "mfe"
 PARAGON_NAME = "paragon"
 PARAGON_IMAGE = "paragon-builder"
 PARAGON_JOB = "paragon-build-tokens"
