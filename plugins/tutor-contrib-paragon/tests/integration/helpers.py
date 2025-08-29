@@ -53,3 +53,14 @@ def get_tutor_root_path():
         raise RuntimeError("Failed to get Tutor root path: " + result.stderr)
 
     return result.stdout.strip()
+
+
+def get_config_value(key: str) -> str:
+    """Get a configuration value from Tutor.
+
+    Returns:
+        str: The value of the configuration key.
+    """
+    result = execute_tutor_command(["config", "printvalue", key])
+    assert result.returncode == 0, f"Error getting {key}: {result.stderr}"
+    return result.stdout.strip()

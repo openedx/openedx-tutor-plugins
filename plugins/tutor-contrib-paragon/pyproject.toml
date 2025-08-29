@@ -31,7 +31,7 @@ dependencies = [
     "tutor-mfe @ git+https://github.com/overhangio/tutor-mfe.git@release",
 ]
 
-optional-dependencies = { dev = ["tutor[dev]>=19.0.0,<21.0.0", "pytest>=8.3.4", "pytest-order>=1.3.0"] }
+optional-dependencies = { dev = ["tutor[dev]>=19.0.0,<21.0.0", "pytest>=8.3.4", "pytest-order>=1.3.0", "requests>=2.32.2"] }
 
 # These fields will be set by hatch_build.py
 dynamic = ["version"]
