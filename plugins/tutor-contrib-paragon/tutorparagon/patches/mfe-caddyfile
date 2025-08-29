@@ -1,0 +1,13 @@
+{% if MFE_HOST_EXTRA_FILES %}
+# Paragon static files hosting
+handle_path /{{ PARAGON_STATIC_URL_PREFIX }}* {
+    @mincss {
+        # Match only minified CSS files
+        path_regexp mincss \.min\.css$ 
+    }
+    handle @mincss {
+        root * /paragon-statics
+        file_server
+    }
+}
+{% endif %}
