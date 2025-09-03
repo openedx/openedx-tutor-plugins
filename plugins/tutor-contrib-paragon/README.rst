@@ -186,10 +186,40 @@ If `MFE_HOST_EXTRA_FILES` is set to `true`, the plugin:
 
 Example URLs:
 
-* Local LMS: `http://local.openedx.io/static/paragon/themes/light/light.min.css`
+* Local LMS: `http://apps.local.openedx.io/static/paragon/themes/light/light.min.css`
 * Dev server: `http://localhost:<PORT>/static/paragon/themes/dark/dark.min.css`
 
 Each theme listed in `PARAGON_THEMES` is automatically exposed for use in MFEs.
+
+Updating Theme Configuration
+============================
+
+If you make changes to the theme list or other plugin variables, follow these steps to apply them correctly:
+
+1. **Save the new configuration**
+
+Use `tutor config save --set` to update your variables. For example:
+
+.. code-block:: bash
+
+    tutor config save --set PARAGON_THEMES='["light", "dark"]'
+
+2. **Restart the development environment**
+
+After saving the configuration, restart Tutor to apply the changes:
+
+.. code-block:: bash
+
+    tutor dev stop
+    tutor dev start
+
+3. **Verify the changes**
+
+Check that the new themes are compiled and served correctly:
+
+.. code-block:: bash
+
+    tutor local do paragon-build-tokens
 
 Troubleshooting
 ===============
