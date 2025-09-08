@@ -1,0 +1,2 @@
+RUN --mount=type=cache,target=/openedx/.cache/pip,sharing=shared \
+    pip install git+https://github.com/feanil/openedx-ltistore.git@feanil/lti1p3_fixes

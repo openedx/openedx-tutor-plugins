@@ -1,0 +1,2 @@
+recursive-include tutor_ltistore/patches *
+recursive-include tutor_ltistore/templates *

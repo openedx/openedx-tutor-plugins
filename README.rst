@@ -21,6 +21,7 @@ Plugin                               Status (*Experimental*, *Production*, or *D
 tutor-contrib-learner-dashboard-mfe  Deprecated
 tutor-contrib-test-legacy-js         "Production" (Supported For Developers)
 tutor-contrib-scout-apm              Experimental
+tutor-contrib-lti-store              Experimental
 ===================================  ======================================================
 
 Getting Started
