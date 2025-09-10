@@ -29,11 +29,11 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         # List of enabled themes to compile and serve
         # Only themes listed here will be processed, even if others exist in sources
         ("PARAGON_ENABLED_THEMES", []),
-        # Whether Tutor should expose the compiled themes to be served (e.g. via nginx, cady or static server)
-        ("PARAGON_SERVE_COMPILED_THEMES", True),
         # Paragon Builder Docker image
         # This image is used to compile themes and should be built with `tutor images build paragon-builder`
         ("PARAGON_BUILDER_IMAGE", "paragon-builder:latest"),
+        ("PARAGON_STATIC_URL_PREFIX", "static/paragon/"),
+        ("MFE_HOST_EXTRA_FILES", True),  # Enable MFE host extra files
     ]
 )
 

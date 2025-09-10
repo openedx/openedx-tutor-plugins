@@ -1,0 +1,5 @@
+{% if MFE_HOST_EXTRA_FILES %}
+{% set PROTOCOL = 'https' if ENABLE_HTTPS else 'http' %}
+{% set PARAGON_BASE_URL = PROTOCOL ~ "://" ~ MFE_HOST ~ "/" ~ PARAGON_STATIC_URL_PREFIX %}
+{% include "paragon/settings/mfe-common-settings" %}
+{% endif %}

@@ -10,9 +10,12 @@ import os
 import shutil
 import pytest
 import re
+import requests
+import time
 
 from .helpers import (
     execute_tutor_command,
+    get_config_value,
     get_tutor_root_path,
     PARAGON_JOB,
     PARAGON_COMPILED_THEMES_FOLDER,
@@ -145,3 +148,68 @@ def test_build_tokens_with_source_tokens_only():
     assert not os.path.exists(
         utility_classes_css
     ), f"{utility_classes_css} should not exist when --source-tokens-only is used."
+
+
+@pytest.mark.order(6)
+def test_build_tokens_generates_minified_bundle():
+    """
+    Ensure that the build-tokens job generates the minified bundle files for hosting.
+    """
+    theme = "light"
+    result = execute_tutor_command(["local", "do", PARAGON_JOB, "--themes", theme])
+    assert result.returncode == 0, f"Error running build-tokens job: {result.stderr}"
+
+    tutor_root = get_tutor_root_path()
+    compiled_path = os.path.join(tutor_root, PARAGON_COMPILED_THEMES_FOLDER)
+
+    minified_theme_bundle = os.path.join(
+        compiled_path, "themes", theme, f"{theme}.min.css"
+    )
+    minified_core_bundle = os.path.join(compiled_path, "core", "core.min.css")
+
+    assert os.path.exists(
+        minified_core_bundle
+    ), f"Minified core bundle file {minified_core_bundle} does not exist."
+    assert os.path.exists(
+        minified_theme_bundle
+    ), f"Minified theme bundle file {minified_theme_bundle} does not exist."
+
+
+@pytest.mark.order(7)
+def test_build_tokens_hosted_files():
+    """
+    Verify that the compiled themes can be served through the tutor-mfe service.
+
+    This test builds tokens, starts the required services, and checks that the
+    static files are accessible via HTTP requests.
+    """
+    result = execute_tutor_command(["local", "do", PARAGON_JOB])
+    assert result.returncode == 0, f"Error running build-tokens job: {result.stderr}"
+
+    static_url_prefix = get_config_value("PARAGON_STATIC_URL_PREFIX").lstrip("/")
+    mfe_host = get_config_value("MFE_HOST")
+
+    services_result = execute_tutor_command(["local", "start", "-d", "caddy", "mfe"])
+    assert services_result.returncode == 0, "Error starting hosting services"
+
+    time.sleep(5)
+
+    try:
+        base_url = f"http://{mfe_host}/{static_url_prefix}"
+        test_files = ["core/core.min.css", "themes/light/light.min.css"]
+
+        for test_file in test_files:
+            url = f"{base_url}{test_file}"
+            response = requests.get(url, timeout=2)
+
+            assert (
+                response.status_code == 200
+            ), f"Expected status 200 for {url}, but got {response.status_code}. "
+
+            content_type = response.headers.get("Content-Type", "")
+            assert "text/css" in content_type.lower(), (
+                f"Expected 'text/css' Content-Type for {url}, but got '{content_type}'."
+            )
+
+    finally:
+        execute_tutor_command(["local", "stop", "caddy", "mfe"])

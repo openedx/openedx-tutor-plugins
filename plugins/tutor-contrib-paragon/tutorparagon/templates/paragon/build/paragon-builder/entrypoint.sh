@@ -41,6 +41,33 @@ parse_args() {
     printf '%s\n' "$@"
 }
 
+build_css_bundle() {
+    # This function builds a CSS bundle using PostCSS.
+    # It takes the path to the index.css file as an argument.
+    # Usage: build_css_bundle <index_css_file>
+
+    local index_css_file="$1"
+
+    local bundle_directory=$(dirname "$index_css_file")
+    local bundle_name=$(basename "$bundle_directory")
+    local minified_output_file="$bundle_directory/${bundle_name}.min.css"
+
+    if npx postcss "$index_css_file" \
+        --use postcss-import \
+        --use postcss-custom-media \
+        --use postcss-combine-duplicated-selectors \
+        --use postcss-minify \
+        --no-map \
+        --output "$minified_output_file"; then
+        
+        echo "Successfully created bundle: $bundle_name"
+        return 0
+    else
+        echo "Failed to build CSS bundle: $bundle_name" >&2
+        return 1
+    fi
+}
+
 set -- $(parse_args "$@")
 
 # Executes the Paragon CLI to build themes.
@@ -50,8 +77,14 @@ npx paragon build-tokens \
     --build-dir "$TMP_BUILD_DIR" \
     "$@"
 
+find "$TMP_BUILD_DIR" -type f -name 'index.css' | while read -r index; do
+    if [ -f "$index" ]; then
+        build_css_bundle "$index"
+    fi
+done
+
 # Moves the built themes to the final volume directory.
-mkdir -p "$FINAL_BUILD_DIR"
+rm -rf "$FINAL_BUILD_DIR"/*
 cp -a "$TMP_BUILD_DIR/." "$FINAL_BUILD_DIR/"
 chmod -R a+rw "$FINAL_BUILD_DIR"
 

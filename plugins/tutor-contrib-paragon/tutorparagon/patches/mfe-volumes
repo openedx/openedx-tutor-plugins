@@ -1,0 +1,3 @@
+{% if MFE_HOST_EXTRA_FILES %}
+- ../../{{ PARAGON_COMPILED_THEMES_PATH }}:/paragon-statics
+{% endif %}

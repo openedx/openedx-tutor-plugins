@@ -3,7 +3,7 @@
 import pytest
 import subprocess
 
-from .helpers import PARAGON_NAME, PARAGON_IMAGE
+from .helpers import PARAGON_NAME, PARAGON_IMAGE, MFE_SERVICE
 
 
 @pytest.fixture(scope="package", autouse=True)
@@ -15,7 +15,7 @@ def setup_tutor_paragon_plugin():
     """
 
     subprocess.run(
-        ["tutor", "plugins", "enable", PARAGON_NAME],
+        ["tutor", "plugins", "enable", MFE_SERVICE, PARAGON_NAME],
         check=True,
         capture_output=True,
     )
@@ -26,10 +26,16 @@ def setup_tutor_paragon_plugin():
         capture_output=True,
     )
 
+    subprocess.run(
+        ["tutor", "config", "save", "--set", "LMS_HOST=local.openedx.io"],
+        check=True,
+        capture_output=True,
+    )
+
     yield
 
     subprocess.run(
-        ["tutor", "plugins", "disable", PARAGON_NAME],
+        ["tutor", "plugins", "disable", PARAGON_NAME, MFE_SERVICE],
         check=True,
         capture_output=True,
     )
