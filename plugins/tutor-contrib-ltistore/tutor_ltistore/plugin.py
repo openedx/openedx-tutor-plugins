@@ -17,6 +17,12 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         # Each new setting is a pair: (setting_name, default_value).
         # Prefix your setting names with 'LTISTORE_'.
         ("LTISTORE_VERSION", __version__),
+        # It's useful to change this to git sources during development
+        # so we're making this a config value you can change.
+        (
+            "LTISTORE_PIP_INSTALL",
+            "git+https://github.com/feanil/openedx-ltistore.git@feanil/minimal_lti1p3_fixes",
+        ),
     ]
 )
 
