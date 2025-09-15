@@ -48,12 +48,17 @@ Version Compatibility
 
 To use this plugin, ensure you're running compatible versions of Open edX and its dependencies:
 
-* **Paragon 23+**
-* **Open edX "Teak" release (or Tutor 20+)**
-* **Tutor 20+**
+* **Paragon >= 23**
+* **Open edX "Teak" release (Tutor >= 20)**
+* **Tutor >= 20**
 
 .. note::
-   Design token functionality is available starting from Paragon 23 and Open edX "Teak". Earlier versions may not be compatible.
+
+   Design token functionality is available starting from Paragon version 23 and the Open edX "Teak" release (which corresponds to Tutor version 20). While the plugin is expected to support future versions (e.g., Tutor 21+), major releases may introduce breaking changes. Compatibility will be updated as needed.
+
+.. warning::
+
+   As of now, the plugin's `pyproject.toml` specifies `tutor>=19.0.0,<21.0.0`. This constraint may be relaxed once upstream changes in `tutor-mfe` are released (see `overhangio/tutor-mfe#267 <https://github.com/overhangio/tutor-mfe/pull/267>`_ and `overhangio/tutor-mfe#264 <https://github.com/overhangio/tutor-mfe/pull/264>`_).
 
 Installation
 ============
@@ -220,6 +225,67 @@ Check that the new themes are compiled and served correctly:
 .. code-block:: bash
 
     tutor local do paragon-build-tokens
+
+Loading Base Paragon Styles
+===========================
+
+By default, this plugin serves theme-specific CSS files. Micro-Frontends (MFEs) typically include the base Paragon styles (e.g., ``core.min.css``) bundled within their own build. This can lead to users downloading the same base Paragon CSS multiple times as they navigate between different MFEs, impacting performance.
+
+To improve first-load performance and reduce redundant downloads, you can configure your MFEs to load shared base Paragon styles instead.
+
+Ways to use shared base styles:
+
+Option 1: Use jsDelivr CDN
+--------------------------
+
+You can configure your MFEs to load base Paragon styles directly from the jsDelivr CDN. This is often the simplest approach.
+
+1.  Determine the ``@openedx/paragon`` version used by your MFEs (e.g., by checking the MFE's ``package.json`` or running ``npm list @openedx/paragon`` within an MFE directory).
+2.  Configure your MFE settings (likely via ``MFE_CONFIG`` in Tutor) to use the jsDelivr URL for the base styles.
+    *   Example URL: ``https://cdn.jsdelivr.net/npm/@openedx/paragon@23.1.0/dist/core.min.css``
+    *   (Replace ``23.1.0`` with the actual version used by your MFEs).
+
+.. note::
+   Using jsDelivr involves loading resources from an external CDN. Consider network policies and data privacy requirements before implementing this approach.
+
+Option 2: Host Your Own Base Styles
+-----------------------------------
+
+You can host the base Paragon styles yourself using this plugin's static file hosting capability (via ``MFE_HOST_EXTRA_FILES``).
+
+1.  Obtain the base Paragon CSS file (typically ``core.min.css``) for the version(s) used by your MFEs.
+2.  Place the base CSS file(s) into your ``PARAGON_THEMES_PATH`` directory. A common structure might be:
+    .. code-block:: text
+
+       {{ TUTOR_ROOT }}/env/plugins/paragon/themes/
+       └── core/
+           └── 23.1.0/ # Use the actual Paragon version
+               └── core.min.css
+
+3.  Configure your MFEs to load the base styles from the plugin's static URL.
+    *   Example URL (based on the structure above): ``http://<your-lms-domain>/static/paragon/themes/core/23.1.0/core.min.css``
+    *   Replace ``<your-lms-domain>`` with your actual LMS domain (e.g., ``apps.local.openedx.io``).
+    *   Update your MFE configuration (for example, by setting ``MFE_CONFIG["PARAGON_THEME_URLS"]`` in your Tutor settings) to point to this URL. **This URL must be placed under the ``"default"`` key within the ``"core"`` section.**
+    *   Example configuration snippet:
+
+        .. code-block:: python
+
+            MFE_CONFIG["PARAGON_THEME_URLS"] = {
+                "core": {
+                    "urls": {
+                        "default": "http://<your-lms-domain>/static/paragon/themes/core/23.1.0/core.min.css"
+                    },
+                },
+                # ... other configurations for variants
+            }
+
+.. note::
+   When hosting your own base styles, ensure the versions match those expected by your MFEs. Using a single, compatible version (e.g., the latest minor of the major version used) is often sufficient if you are using standard MFEs from the same Open edX release. For advanced configurations like version wildcards, refer to the `frontend-platform theming documentation <https://github.com/openedx/frontend-platform/blob/master/docs/how_tos/theming.md>`_.
+
+Additional Resources
+--------------------
+
+For more detailed information on MFE theming and loading external styles, refer to the `frontend-platform theming documentation <https://github.com/openedx/frontend-platform/blob/master/docs/how_tos/theming.md>`_.
 
 Troubleshooting
 ===============
