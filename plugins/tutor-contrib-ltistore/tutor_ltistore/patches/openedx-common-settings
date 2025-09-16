@@ -1,0 +1,17 @@
+
+# Add the lti store filter to the filter list, creating the configuration if it doesn't
+# exist but updating it if it does exist.
+_filter_name = 'org.openedx.xblock.lti_consumer.configuration.listed.v1'
+_step_name = 'lti_store.pipelines.GetLtiConfigurations'
+
+try:
+    not OPEN_EDX_FILTERS_CONFIG
+except NameError:  # OPEN_EDX_FILTERS_CONFIG is not defined
+    OPEN_EDX_FILTERS_CONFIG = {}
+
+if not OPEN_EDX_FILTERS_CONFIG.get(_filter_name):
+    OPEN_EDX_FILTERS_CONFIG[_filter_name] = {
+        "fail_silently": False,
+        "pipeline": [],
+    }
+OPEN_EDX_FILTERS_CONFIG[_filter_name]["pipeline"].append(_step_name)
