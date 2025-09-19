@@ -21,7 +21,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         # so we're making this a config value you can change.
         (
             "LTISTORE_PIP_INSTALL",
-            "git+https://github.com/feanil/openedx-ltistore.git@feanil/minimal_lti1p3_fixes",
+            "openedx-ltistore",
         ),
     ]
 )
