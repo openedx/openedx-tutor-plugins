@@ -1,4 +1,3 @@
-{% if MFE_HOST_EXTRA_FILES %}
 {% if not PARAGON_ENABLED_THEMES %} {% set PARAGON_ENABLED_THEMES = ['light'] %} {% endif %}
 - name: static-files
   configMap:
@@ -10,4 +9,3 @@
     - key: {{ theme }}.min.css
       path: themes/{{ theme }}/{{ theme }}.min.css
     {% endfor %}
-{% endif %}
