@@ -1,0 +1,11 @@
+{% if not PARAGON_ENABLED_THEMES %} {% set PARAGON_ENABLED_THEMES = ['light'] %} {% endif %}
+- name: static-files
+  configMap:
+    name: paragon-static-files
+    items:
+    - key: core.min.css
+      path: core/core.min.css
+    {% for theme in PARAGON_ENABLED_THEMES %}
+    - key: {{ theme }}.min.css
+      path: themes/{{ theme }}/{{ theme }}.min.css
+    {% endfor %}

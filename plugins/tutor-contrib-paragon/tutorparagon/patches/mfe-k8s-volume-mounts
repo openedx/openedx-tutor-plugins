@@ -1,0 +1,3 @@
+- mountPath: /paragon-statics
+  name: static-files
+  readOnly: true
