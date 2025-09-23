@@ -254,10 +254,10 @@ Configure your MFE settings (likely via ``MFE_CONFIG`` in Tutor) to use the jsDe
 
 *   Example URL using the wildcard::
 
-        ``https://cdn.jsdelivr.net/npm/@openedx/paragon@$paragonVersion/dist/core.min.css``
+        https://cdn.jsdelivr.net/npm/@openedx/paragon@$paragonVersion/dist/core.min.css
 *   (Alternatively, you can specify a fixed version like ``23.1.0`` if needed::
 
-        ``https://cdn.jsdelivr.net/npm/@openedx/paragon@23.1.0/dist/core.min.css``
+        https://cdn.jsdelivr.net/npm/@openedx/paragon@23.1.0/dist/core.min.css
 
 **💡 Note:**  
    Using jsDelivr involves loading resources from an external CDN. Consider network policies and data privacy requirements before implementing this approach.
