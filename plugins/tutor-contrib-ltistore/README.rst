@@ -47,13 +47,13 @@ following:
 1. Install the `openedx-ltistore` python library in the edx-platform python
    environment.
 
-   .. code-block::
+.. code-block::
 
    pip install openedx-ltistore
 
 2. Add the following settings to your edx-platform LMS/CMS Settings.
 
-   .. code-block::
+.. code-block::
 
    OPEN_EDX_FILTERS_CONFIG = {
        "org.openedx.xblock.lti_consumer.configuration.listed.v1": {
@@ -66,13 +66,13 @@ following:
 
 3. Enable the `lti_consumer.enable_external_config_filter` waffle flag. Run the followi
 
-   .. code-block::
+.. code-block::
 
    ./manage.py lms waffle_flag --create --everyone lti_consumer.enable_external_config_filter
 
 4. Run migrations for the lti_stor app.
 
-   .. code-block::
+.. code-block::
 
    ./manage.py lms migrate lti_store
 
