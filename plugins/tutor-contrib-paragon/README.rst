@@ -65,9 +65,7 @@ To use this plugin, ensure you're running compatible versions of Open edX and it
 
     tutor>=19.0.0,<21.0.0
 
-This constraint may be relaxed once upstream changes in `tutor-mfe` are released:  
- * https://github.com/overhangio/tutor-mfe/pull/267  
- * https://github.com/overhangio/tutor-mfe/pull/264
+This constraint will be revisited once as future versions of Tutor are released and this plugin's functionality is verified against them.
 
 
 Installation
