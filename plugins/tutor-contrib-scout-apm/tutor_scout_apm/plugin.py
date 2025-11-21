@@ -1,9 +1,9 @@
 from __future__ import annotations
 from glob import glob
 import os
-import pkg_resources
 import uuid
 
+from importlib.resources import files
 from tutor import hooks as tutor_hooks
 
 from .__about__ import __version__
@@ -35,9 +35,10 @@ tutor_hooks.Filters.CONFIG_DEFAULTS.add_item(
 
 # For each file in tutor_media/patches,
 # apply a patch based on the file's name and contents.
+patches_dir = files("tutor_scout_apm") / "patches"
 patch_files = glob(
     os.path.join(
-        pkg_resources.resource_filename("tutor_scout_apm", "patches"),
+        str(patches_dir),
         "*",
     )
 )
