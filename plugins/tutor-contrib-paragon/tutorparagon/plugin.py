@@ -1,7 +1,6 @@
 import os
 from glob import glob
 
-import click
 import importlib_resources
 from tutor import hooks
 from tutor import config as tutor_config
