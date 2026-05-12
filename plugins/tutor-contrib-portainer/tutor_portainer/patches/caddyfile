@@ -1,0 +1,4 @@
+# Portainer
+{{ PORTAINER_HOST }}{$default_site_port} {
+    import proxy "portainer:{{ PORTAINER_PORT }}"
+}

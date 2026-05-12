@@ -24,6 +24,7 @@ tutor-contrib-test-legacy-js         "Production" (Supported For Developers)
 tutor-contrib-scout-apm              Experimental
 tutor-contrib-lti-store              Experimental
 tutor-contrib-paragon                Production
+tutor-contrib-portainer              Experimental
 ===================================  ======================================================
 
 Getting Started
