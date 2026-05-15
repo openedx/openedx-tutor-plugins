@@ -120,23 +120,26 @@ Core Plugin Settings
 
 All configuration variables are defined via Tutor:
 
-+----------------------------+--------------------------------------------------------------+-------------------------------+
-| Variable                   | Description                                                  | Default Value                 |
-+============================+==============================================================+===============================+
-| `PARAGON_THEMES_PATH`     | Base path for theme sources and compiled output              | `env/plugins/paragon/themes` |
-+----------------------------+--------------------------------------------------------------+-------------------------------+
-| `PARAGON_THEMES`          | List of theme folders to compile and serve                   | `['light', 'dark']`           |
-+----------------------------+--------------------------------------------------------------+-------------------------------+
-| `MFE_HOST_EXTRA_FILES`    | Whether to serve compiled themes via Tutor’s MFE web server      | `true`                        |
-+----------------------------+--------------------------------------------------------------+-------------------------------+
+``PARAGON_THEME_SOURCES_PATH``
+    Base path for theme sources. Default: ``env/plugins/paragon/theme-sources``.
+
+``PARAGON_COMPILED_THEMES_PATH``
+    Base path for compiled output. Default: ``env/plugins/paragon/compiled-themes``.
+
+``PARAGON_ENABLED_THEMES``
+    List of theme folders to compile and serve. Default: ``[]``.
+
+``MFE_HOST_EXTRA_FILES``
+    Whether to serve compiled themes via Tutor's MFE web server. Default: ``true``.
 
 Sample Configuration
 --------------------
 
 .. code-block:: yaml
 
-    PARAGON_THEMES_PATH: "{{ TUTOR_ROOT }}/env/plugins/paragon/themes"
-    PARAGON_THEMES:
+    PARAGON_THEME_SOURCES_PATH: "env/plugins/paragon/theme-sources"
+    PARAGON_COMPILED_THEMES_PATH: "env/plugins/paragon/compiled-themes"
+    PARAGON_ENABLED_THEMES:
       - light
       - dark
     MFE_HOST_EXTRA_FILES: true
@@ -146,12 +149,13 @@ Theme Directory Structure
 
 .. code-block:: text
 
-    {{ TUTOR_ROOT }}/env/plugins/paragon/themes/
-    ├── core/           # Shared base design tokens
-    ├── light/          # Light theme tokens
-    └── dark/           # Dark theme tokens
+    $(tutor config printroot)/env/plugins/paragon/theme-sources/
+    ├── core/                 # Shared base design tokens
+    └── themes/
+        ├── light/            # Light theme tokens
+        └── dark/             # Dark theme tokens
 
-Only themes listed in `PARAGON_THEMES` will be compiled and served. The `core/` directory is required and provides base styles shared across all themes.
+Only themes listed in `PARAGON_ENABLED_THEMES` will be compiled and served. The `core/` directory is required and provides base styles shared across all themes.
 
 Usage
 =====
@@ -159,7 +163,7 @@ Usage
 Build All Themes
 ----------------
 
-To compile all themes listed in `PARAGON_THEMES`:
+To compile all themes listed in `PARAGON_ENABLED_THEMES`:
 
 .. code-block:: bash
 
@@ -187,7 +191,7 @@ Output
 ------
 
 Compiled CSS files (minified `.min.css`) are written to:
-{{ TUTOR_ROOT }}/env/plugins/paragon/themes/<theme>/<theme>.min.css
+$(tutor config printroot)/env/plugins/paragon/compiled-themes/themes/<theme>/<theme>.min.css
 
 Static Hosting
 ==============
@@ -202,7 +206,7 @@ Example URLs:
 * Local LMS: `http://apps.local.openedx.io/static/paragon/themes/light/light.min.css`
 * Dev server: `http://localhost:<PORT>/static/paragon/themes/dark/dark.min.css`
 
-Each theme listed in `PARAGON_THEMES` is automatically exposed for use in MFEs.
+Each theme listed in `PARAGON_ENABLED_THEMES` is automatically exposed for use in MFEs.
 
 Updating Theme Configuration
 ============================
@@ -215,7 +219,7 @@ Use `tutor config save --set` to update your variables. For example:
 
 .. code-block:: bash
 
-    tutor config save --set PARAGON_THEMES='["light", "dark"]'
+    tutor config save --set PARAGON_ENABLED_THEMES='["light", "dark"]'
 
 2. **Restart the development environment**
 
@@ -270,18 +274,18 @@ You can host the base Paragon styles yourself using this plugin's static file ho
 **💡 Note:**  
     MFEs within the same Open edX release typically use the same major version of Paragon, but minor versions might differ. You can check the version for an MFE by inspecting its ``package.json`` file or running ``npm list @openedx/paragon`` within an MFE directory.
 
-2.  Place the base CSS file(s) into your ``PARAGON_THEMES_PATH`` directory. You have two main options for structuring this:
+2.  Place the base CSS file(s) into your ``PARAGON_COMPILED_THEMES_PATH`` directory. You have two main options for structuring this:
 
     *   **Host a single version:** If all your MFEs can use the same version (e.g., the latest minor of a major version like ``23.4.0``), place it once::
 
-           {{ TUTOR_ROOT }}/env/plugins/paragon/themes/
+           $(tutor config printroot)/env/plugins/paragon/compiled-themes/
            └── core/
                └── 23.4.0/ # A single, chosen version
                    └── core.min.css
 
     *   **Host multiple versions:** To support MFEs using different Paragon versions, create a directory structure for each required version::
 
-           {{ TUTOR_ROOT }}/env/plugins/paragon/themes/
+           $(tutor config printroot)/env/plugins/paragon/compiled-themes/
            └── core/
                ├── 23.1.0/ # Version for MFE A
                │   └── core.min.css
@@ -321,7 +325,7 @@ For more detailed information on MFE theming and loading external styles, refer 
 Troubleshooting
 ===============
 
-* **Themes not compiled**: Ensure theme folders exist and match names in `PARAGON_THEMES`.
+* **Themes not compiled**: Ensure theme folders exist and match names in `PARAGON_ENABLED_THEMES`.
 * **Permission errors**: Verify Docker and Tutor have write access to the themes directory.
 * **Missing core tokens**: Ensure the `core/` folder exists and contains valid token files.
 * **Error: "Expected at least 4 args"**: Always run builds via `tutor local do`, not inside containers.
