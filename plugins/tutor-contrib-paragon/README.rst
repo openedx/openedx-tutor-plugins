@@ -127,7 +127,7 @@ All configuration variables are defined via Tutor:
     Base path for compiled output. Default: ``env/plugins/paragon/compiled-themes``.
 
 ``PARAGON_ENABLED_THEMES``
-    List of theme folders to compile and serve. Default: ``[]``.
+    List of theme folders to compile and serve. Default: ``['light']``.
 
 ``MFE_HOST_EXTRA_FILES``
     Whether to serve compiled themes via Tutor's MFE web server. Default: ``true``.
