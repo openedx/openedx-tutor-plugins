@@ -2,8 +2,14 @@ from tutor import hooks
 from tutormfe.hooks import EXTERNAL_SCRIPTS
 
 
+# This snippet is inlined verbatim into both a .jsx and a .tsx file, so it has
+# to be plain JavaScript that also survives the frontend-base type checker:
+# no implicit `this` properties, no undeclared globals, no possibly-null DOM
+# nodes.
 GOOGLE_ANALYTICS_LOADER = """
 class GoogleAnalyticsLoader {
+  analyticsId = '';
+
   constructor({ config }) {
     this.analyticsId = config.GOOGLE_ANALYTICS_4_ID;
   }
@@ -13,41 +19,27 @@ class GoogleAnalyticsLoader {
       return;
     }
 
-    global.googleAnalytics = global.googleAnalytics || [];
-    const { googleAnalytics } = global;
-
-    // If the snippet was invoked do nothing.
-    if (googleAnalytics.invoked) {
+    // Never inject the snippet twice, in case more than one app registers
+    // the loader on the same page.
+    if (document.querySelector('script[data-google-analytics-4]')) {
       return;
     }
 
-    // Invoked flag, to make sure the snippet
-    // is never invoked twice.
-    googleAnalytics.invoked = true;
+    const scriptSrc = document.createElement('script');
+    scriptSrc.async = true;
+    scriptSrc.src = `https://www.googletagmanager.com/gtag/js?id=${this.analyticsId}`;
+    scriptSrc.setAttribute('data-google-analytics-4', '');
 
-    googleAnalytics.load = (key, options) => {
-      const scriptSrc = document.createElement('script');
-      scriptSrc.type = 'text/javascript';
-      scriptSrc.async = true;
-      scriptSrc.src = `https://www.googletagmanager.com/gtag/js?id=${key}`;
+    const scriptGtag = document.createElement('script');
+    scriptGtag.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${this.analyticsId}');
+    `;
 
-      const scriptGtag = document.createElement('script');
-      scriptGtag.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${key}');
-      `;
-
-      // Insert our scripts next to the first script element.
-      const first = document.getElementsByTagName('script')[0];
-      first.parentNode.insertBefore(scriptSrc, first);
-      first.parentNode.insertBefore(scriptGtag, first);
-      googleAnalytics._loadOptions = options; // eslint-disable-line no-underscore-dangle
-    };
-
-    // Load GoogleAnalytics with your key.
-    googleAnalytics.load(this.analyticsId);
+    document.head.appendChild(scriptSrc);
+    document.head.appendChild(scriptGtag);
   }
 }
 """

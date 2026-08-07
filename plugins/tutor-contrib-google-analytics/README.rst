@@ -2,7 +2,7 @@ Google Analytics plugin for `Tutor <https://docs.tutor.overhang.io>`__
 =======================================================================
 
 This plugin wires a Google Analytics 4 loader into every Open edX MFE that
-is built through ``tutor-mfe``. It duplicates the ``GoogleAnalyticsLoader``
+is built through ``tutor-mfe``. It replaces the ``GoogleAnalyticsLoader``
 that used to ship with ``@openedx/frontend-platform``.
 
 The loader reads ``GOOGLE_ANALYTICS_4_ID`` from the MFE runtime configuration
