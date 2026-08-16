@@ -27,7 +27,7 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         ("PARAGON_COMPILED_THEMES_PATH", "env/plugins/paragon/compiled-themes"),
         # List of enabled themes to compile and serve
         # Only themes listed here will be processed, even if others exist in sources
-        ("PARAGON_ENABLED_THEMES", []),
+        ("PARAGON_ENABLED_THEMES", ['light']),
         # Paragon Builder Docker image
         # This image is used to compile themes and should be built with `tutor images build paragon-builder`
         ("PARAGON_BUILDER_IMAGE", "paragon-builder:latest"),
