@@ -1,6 +1,9 @@
 frontend-base plugin for `Tutor <https://docs.tutor.overhang.io>`__
 ====================================================================
 
+THIS PLUGIN IS DEPRECATED: the functionality it provides is now an official
+part of `tutor-mfe <https://github.com/overhangio/tutor-mfe.git>`__.
+
 This is a very simple plugin.  It's only job is to enable the `frontend-base
 <https://github.com/openedx/frontend-base>`__ core apps already present in
 Tutor via `tutor-mfe <https://github.com/overhangio/tutor-mfe>`__.
