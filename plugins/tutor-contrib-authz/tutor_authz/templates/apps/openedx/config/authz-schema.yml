@@ -1,0 +1,9 @@
+# Authorization schema contributed by Tutor plugins through the
+# "openedx-authz-schema" patch. Compiled into the authorization policy by
+# `./manage.py {lms,cms} load_authz_schema` during initialisation.
+#
+# Contributions are separated by "---" so that each one stays an independent
+# YAML document with its own schema_version and priority. Do not merge them:
+# a single mapping would lose every contribution but the last.
+#
+{{ patch("openedx-authz-schema", separator="\n---\n") }}

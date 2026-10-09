@@ -1,0 +1,2 @@
+recursive-include tutor_authz/patches *
+recursive-include tutor_authz/templates *

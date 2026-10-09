@@ -1,0 +1,2 @@
+# Allows authorization schema discovery for filesystem files
+OPENEDX_AUTHZ_SCHEMA_FILES = ["/openedx/config/authz-schema.yml"]

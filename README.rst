@@ -26,6 +26,7 @@ tutor-contrib-scout-apm              Experimental
 tutor-contrib-lti-store              Experimental
 tutor-contrib-paragon                Production
 tutor-contrib-portainer              Experimental
+tutor-contrib-authz                  Experimental
 ===================================  ======================================================
 
 Getting Started
